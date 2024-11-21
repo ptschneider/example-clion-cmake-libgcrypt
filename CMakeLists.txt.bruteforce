@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.25...3.29)
+project(dourgaur C)
+
+set(CMAKE_C_STANDARD 11)
+
+add_executable(dourgaur main.c dg_init.c)
+
+add_library(libpthread STATIC IMPORTED)
+set_target_properties(libpthread PROPERTIES IMPORTED_LOCATION /usr/lib/x86_64-linux-gnu/libpthread.a)
+set_target_properties(libpthread PROPERTIES INTERFACE_INCLUDE_DIRECTORIES /usr/include)
+
+add_library(libgcrypt STATIC IMPORTED GLOBAL)
+set_target_properties(libgcrypt PROPERTIES IMPORTED_LOCATION /usr/lib/x86_64-linux-gnu/libgcrypt.a)
+set_target_properties(libgcrypt PROPERTIES INTERFACE_INCLUDE_DIRECTORIES /usr/include)
+
+target_link_libraries(dourgaur libgcrypt)
